@@ -18,7 +18,7 @@ ALEXARC='/home/pi/github/alexa-remote-control/alexa_remote_control.sh'
 IP="$(grep 'IP=' $TESLA/secrets |cut -d'=' -f2)"
 CMD="curl -sk https://$IP/api/system_status/grid_status"
 
-GWDOWNCOUNT=0
+GWDOWNCOUNT=1
 RETRYINTERVAL=10  # When the gateway is down
 
 while true;
@@ -43,7 +43,7 @@ do
         continue
     fi
 
-    GWDOWNCOUNT=0
+    GWDOWNCOUNT=1
 
     if [[ "$HOUR" -eq "19" && "$MIN" -eq "10" ]]
     then
