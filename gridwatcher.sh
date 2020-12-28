@@ -18,12 +18,32 @@ ALEXARC='/home/pi/github/alexa-remote-control/alexa_remote_control.sh'
 IP="$(grep 'IP=' $TESLA/secrets |cut -d'=' -f2)"
 CMD="curl -sk https://$IP/api/system_status/grid_status"
 
+GWDOWNCOUNT=0
+RETRYINTERVAL=10  # When the gateway is down
+
 while true;
 do
     TIMESTAMP="$(date -I'seconds')"
     HOUR=$(date "+%H")
     MIN=$(date "+%M")
     GSTATUS="$($CMD | jq -r '.grid_status')"
+
+    echo "$TIMESTAMP,$GSTATUS" >> $OUTFILE
+
+    # Make sure we got a response from the Tesla Gateway.
+    if [[ "$GSTATUS" == "" ]]
+    then
+        if [[ (($(($GWDOWNCOUNT % $RETRYINTERVAL)) == 0)) ]]
+        then
+            # Next loop
+            $ALEXARC -e "speak: 'It looks like the Tesla gateway has dropped off the Wifi network. I'll try again in ${RETRYINTERVAL} minutes, or you can go out on the porch, open the large cover, and push the reset button with a pencil'"
+        fi
+        sleep $SLEEP
+        GWDOWNCOUNT=$(($GWDOWNCOUNT + 1))
+        continue
+    fi
+
+    GWDOWNCOUNT=0
 
     if [[ "$HOUR" -eq "19" && "$MIN" -eq "10" ]]
     then
@@ -45,8 +65,6 @@ do
             $ALEXARC -e "speak: 'This is a reminder. Clowder Cove grid is up. Remove the USB silencer dongle from the gridwatcherpeye.'"
         fi
     fi
-
-    echo "$TIMESTAMP,$GSTATUS" >> $OUTFILE
 
     sleep $SLEEP
 
