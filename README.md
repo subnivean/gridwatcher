@@ -16,4 +16,6 @@ After installation of the above, I needed to do a `sudo raspi-config` to enable 
 
 I also needed to `sudo apt install realvnc-vnc-viewer` onto my Ubuntu laptop, as `remmina` did not work.
 
-Once I got to a desktop on the Pi, I started Firefox and installed the `Export Cookies` add-on, after which I went to `https:\\alexa.amazon.com` and exported cookies in the `amazon.com` domain. This file was eventually saved to the `.alexa.cookies` file for Capcha-free logins through `cURL` and `wget`.
+Logged in to the Pi desktop via `vncviewer 192.168.1.6` from the laptop ('pi'/'B3st')
+
+Once I got to a desktop on the Pi, I started Firefox and installed the `Export Cookies` add-on, after which I went to `https:\\alexa.amazon.com` and exported cookies in the `amazon.com` domain (clear all cookies first). This file was eventually saved to the `~/.alexa-remote-control/.alexa.cookies` file for Capcha-free logins through `cURL` and `wget`.
