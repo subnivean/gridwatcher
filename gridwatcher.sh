@@ -45,9 +45,10 @@ do
 
     GWDOWNCOUNT=1
 
-    if [[ "$HOUR" -eq "19" && "$MIN" -eq "10" ]]
+    if [[ "$HOUR" -eq "19" && "$MIN" -eq "13" ]]
     then
-        $ALEXARC -e "speak: 'This is your daily test of the Clowder Cove gridwatcherPEYE system. This is only a test. And oh - you can watch Jeopardy now.'"
+        echo "Announcing test..."
+        $ALEXARC -e "speak: 'This is your daily test of the Clowder Cove gridwatcherPEYE system. This is only a test. And oh...you can watch Jeopardy now.'"
     fi
 
     if [ -d '/dev/usb/' ]; then SILENCER=true; else SILENCER=false; fi
@@ -57,11 +58,14 @@ do
     then
         if ! $SILENCER
         then
-            $ALEXARC -e "speak: 'Clowder Cove grid is down. SAAAAAD. Unplug the car if it's charging and turn off the heatpump (using the power button on the remote) to conserve the Powerwall. You can turn on the gas heater if your ass gets too cold. You can silence this message by plugging any USB device into the gridwatcherpeye.'"
+            echo "Announcing grid down..."
+            #$ALEXARC -e "speak: 'Clowder Cove grid is down. SAAAAAD. Unplug the car if it's charging and turn off the heatpump (using the power button on the remote) to conserve the Powerwall. You can turn on the gas heater if your ass gets too cold. You can silence this message by plugging any USB device into the gridwatcherpeye.'"
+            $ALEXARC -e "speak: 'Clowder Cove grid is down. SAAAAAD. Unplug the car if it's charging and turn off the heatpump to conserve the Powerwall.'"
         fi
     else
         if $SILENCER
         then
+            echo "Announcing silencer reminder..."
             $ALEXARC -e "speak: 'This is a reminder. Clowder Cove grid is up. Remove the USB silencer dongle from the gridwatcherpeye.'"
         fi
     fi
