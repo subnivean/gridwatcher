@@ -27,6 +27,7 @@ do
     # Note explicit conversion of numbers to base 10; otherwise
     # they are interpreted as octal numbers, causing errors
     # with '08' and '09'.
+    # Found fix at: https://stackoverflow.com/questions/24777597
     HOUR=$((10#$(date "+%H")))
     MIN=$((10#$(date "+%M")))
     GSTATUS="$($CMD | jq -r '.grid_status')"
