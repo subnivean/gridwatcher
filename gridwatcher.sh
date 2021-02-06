@@ -24,8 +24,11 @@ RETRYINTERVAL=10  # When the gateway is down
 while true;
 do
     TIMESTAMP="$(date -I'seconds')"
-    HOUR=$(date "+%H")
-    MIN=$(date "+%M")
+    # Note explicit conversion of numbers to base 10; otherwise
+    # they are interpreted as octal numbers, causing errors
+    # with '08' and '09'.
+    HOUR=$((10#$(date "+%H")))
+    MIN=$((10#$(date "+%M")))
     GSTATUS="$($CMD | jq -r '.grid_status')"
 
     echo "$TIMESTAMP,$GSTATUS" >> $OUTFILE
@@ -45,7 +48,7 @@ do
 
     GWDOWNCOUNT=1
 
-    if [[ "$HOUR" -eq "19" && "$MIN" -eq "13" ]]
+    if [[ $HOUR -eq 19 && $MIN -eq 13 ]]
     then
         echo "Announcing test..."
         $ALEXARC -e "speak: 'This is your daily test of the Clowder Cove gridwatcherPEYE system. This is only a test. And oh...you can watch Jeopardy now.'"
