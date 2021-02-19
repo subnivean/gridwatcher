@@ -19,3 +19,11 @@ I also needed to `sudo apt install realvnc-vnc-viewer` onto my Ubuntu laptop, as
 Logged in to the Pi desktop via `vncviewer 192.168.1.6` from the laptop ('pi'/'B3st')
 
 Once I got to a desktop on the Pi, I started Firefox and installed the `Export Cookies` add-on, after which I went to `https:\\alexa.amazon.com` and exported cookies in the `amazon.com` domain (clear all cookies first). This file was eventually saved to the `~/.alexa-remote-control/.alexa.cookies` file for Capcha-free logins through `cURL` and `wget`.
+
+The format of the `creds.json` file for authenticating to the Tesla gateway is:
+
+```
+{"username":"customer","password":"my_password", "email":"my_email","force_sm_off":false}
+```
+
+Note that `"username"` above is literally `"customer"` (as opposed to `"installer"`)
