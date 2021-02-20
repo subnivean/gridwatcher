@@ -34,6 +34,10 @@ $LOGINCMD >/dev/null
 GWDOWNCOUNT=1
 RETRYINTERVAL=10  # When the gateway is down
 
+#$ALEXARC -e "speak: \
+#   'Its probably none of my business, but that husband of yours is a real poo-poo head. Would you like me to rig up something to fall on his head, or maybe throw down some banana peels?'"
+#exit
+
 while true;
 do
     TIMESTAMP="$(date -I'seconds')"
