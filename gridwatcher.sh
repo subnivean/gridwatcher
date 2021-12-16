@@ -35,7 +35,7 @@ GWDOWNCOUNT=1
 RETRYINTERVAL=10  # When the gateway is down
 
 #$ALEXARC -e "speak: \
-#   'Its probably none of my business, but that husband of yours is a real poo-poo head. Would you like me to rig up something to fall on his head, or maybe throw down some banana peels?'"
+#   'Hey Susan, why don't you get your husband a beer?'"
 #exit
 
 while true;
@@ -48,13 +48,8 @@ do
     HOUR=$((10#$(date "+%H")))
     MIN=$((10#$(date "+%M")))
 
-    # Get a new token every hour (or maybe 2, if we don't land
-    # on zero because of processing time)
-    if [[ $MIN -eq 42 ]]
-    then
-        echo "$TIMESTAMP: Getting new gateway token..."
-        $LOGINCMD >/dev/null
-    fi
+    # Changed on 2021-12-15 - get new token every time.
+    $LOGINCMD >/dev/null
 
     GSTATUS="$($CMD | jq -r '.grid_status')"
 
