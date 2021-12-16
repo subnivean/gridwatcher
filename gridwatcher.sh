@@ -55,6 +55,13 @@ do
 
     echo "$TIMESTAMP,$GSTATUS" >> $OUTFILE
 
+    if [[ "$GSTATUS" == "null" ]]  # Bad cookie? Or can't reach?
+    then
+        echo "$TIMESTAMP: Got a 'null'"
+        sleep 10
+        continue
+    fi
+
     # Make sure we got a response from the Tesla Gateway.
     if [[ "$GSTATUS" == "" ]]
     then
@@ -63,8 +70,8 @@ do
             # Next loop
             echo "$TIMESTAMP: Announcing network drop..."
             $ALEXARC -e "speak: \
-               'It looks like the Tesla gateway has dropped off the \
-                wifi network. I'll try again in ${RETRYINTERVAL} \
+               'It looks like the Tesla gateway has dropped off \
+                the network. I'll try again in ${RETRYINTERVAL} \
                 minutes, or you can go out on the porch, open the \
                 large cover, and push the reset button with a pencil'"
         fi
