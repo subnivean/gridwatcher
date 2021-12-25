@@ -51,7 +51,7 @@ do
     counter=0
     until "${LOGINCMD[@]}" |grep token >/dev/null
     do
-        sleep 1
+        sleep 5
         [[ counter -eq $max_retry ]] && echo "Failed!" && break
         #echo "Trying again. Try #$counter"
         ((counter++))
