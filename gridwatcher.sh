@@ -17,19 +17,16 @@ ALEXARC='/home/pi/github/alexa-remote-control/alexa_remote_control.sh'
 
 IP="$(grep 'IP=' $TESLA/secrets |cut -d'=' -f2)"
 
-LOGINCMD="curl -s -k -i \
-          -c $TESLA/cookie.txt \
-          -X POST \
-          -H ""Content-Type: application/json"" \
-          -d @$TESLA/creds.json \
-          https://$IP/api/login/Basic"
+LOGINCMD=(curl -s -k -i
+          -c $TESLA/cookie.txt
+          -X POST
+          -H "Content-Type: application/json"
+          -d @$TESLA/creds.json
+          https://$IP/api/login/Basic )
 
 CMD="curl -s -k \
     -b $TESLA/cookie.txt \
     https://$IP/api/system_status/grid_status"
-
-echo "Logging in..."
-$LOGINCMD >/dev/null
 
 GWDOWNCOUNT=1
 RETRYINTERVAL=10  # When the gateway is down
@@ -49,7 +46,16 @@ do
     MIN=$((10#$(date "+%M")))
 
     # Changed on 2021-12-15 - get new token every time.
-    $LOGINCMD >/dev/null
+    # echo "Logging in..."
+    max_retry=5
+    counter=0
+    until "${LOGINCMD[@]}" |grep token >/dev/null
+    do
+        sleep 1
+        [[ counter -eq $max_retry ]] && echo "Failed!" && break
+        #echo "Trying again. Try #$counter"
+        ((counter++))
+    done
 
     GSTATUS="$($CMD | jq -r '.grid_status')"
 
