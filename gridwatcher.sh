@@ -12,6 +12,7 @@ export TTS_LOCALE='en-US'
 export AMAZON='amazon.com'
 export ALEXA='alexa.amazon.com'
 export TMP='/home/pi/.alexa-remote-control'
+export REFRESH_TOKEN='Atnr|EwICIA0oevWJaS60Ptxzp4K4x-nLsiwasipQmk7EgvkhLZkc1AKQxC8iAVIjSnsnnujFkY3LwL5ePyNE8LYh3U4AdlpIU9K5Fu5QtCyHd0l19TRqX6fXVUNzPpAIrhpWTbWoApQ2Yxk26BL7rMkVpCAaUTDpGNA479aCVcxcoXghgR0WdVYhEPZ4B0gY8OXITvuLMsGu3vMjJCPn_vvak81wRVMXNXQqTxGvpZomF_MD0gLHUOTtj-ySy_i8d1kiE59XtIBKwX-P9Jn290049t-7N30k6cAeo3Gb8u4X9Rj-dqPEquMv37S0K-h-W6yoJd1HGFo'
 
 ALEXARC='/home/pi/github/alexa-remote-control/alexa_remote_control.sh'
 
@@ -31,8 +32,7 @@ CMD="curl -s -k \
 GWDOWNCOUNT=1
 RETRYINTERVAL=10  # When the gateway is down
 
-#$ALEXARC -e "speak: \
-#   'Hey Susan, why don't you get your husband a beer?'"
+#$ALEXARC -e "speak: 'Wow, it works'"
 #exit
 
 while true;
@@ -93,7 +93,7 @@ do
         echo "$TIMESTAMP: Announcing test..."
         $ALEXARC -e "speak: \
            'This is your daily test of the Clowder Cove gridwatcherPEYE \
-           system. This is only a test. And oh...you can watch Jeopardy now.'"
+           system. This is only a test.'"
     fi
 
     if [ -d '/dev/usb/' ]; then SILENCER=true; else SILENCER=false; fi
